@@ -1,0 +1,202 @@
+# Mageplaza
+#
+# NOTICE OF LICENSE
+#
+# This source file is subject to the Mageplaza.com license that is
+# available through the world-wide-web at this URL:
+# https://www.mageplaza.com/LICENSE.txt
+#
+# DISCLAIMER
+#
+# Do not edit or add to this file if you wish to upgrade this extension to newer
+# version in the future.
+#
+# @category    Mageplaza
+# @package     Mageplaza_GiftWrapGraphQl
+# @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
+# @license     https://www.mageplaza.com/LICENSE.txt
+
+type Query {
+    mpGiftCategory (
+        id: Int! @doc(description: "Specifies the category id to search for."),
+    ): GiftCategoryOutput @resolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\Get\\GiftCategory") @doc(description: "Searches for an item that matches the id.")
+    mpGiftCategoryList (
+        filter: GiftCategoryFilterInput! @doc(description: "Identifies which fields to search for and return."),
+        pageSize: Int = 20 @doc(description: "Specifies the maximum number of results to return at once. The default value is 20."),
+        currentPage: Int = 1 @doc(description: "Specifies which page of results to return. The default value is 1.")
+    ): GiftCategoryListOutput @resolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\GetList\\GiftCategory") @doc(description: "Searches for items that match the criteria specified in the search and filter attributes.")
+    mpGiftWrap (
+        id: Int! @doc(description: "Specifies the gift wrap id to search for."),
+    ): GiftWrapOutput @resolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\Get\\GiftWrap") @doc(description: "Searches for an item that matches the id.")
+    mpGiftWrapList (
+        filter: GiftWrapFilterInput! @doc(description: "Identifies which fields to search for and return."),
+        pageSize: Int = 20 @doc(description: "Specifies the maximum number of results to return at once. The default value is 20."),
+        currentPage: Int = 1 @doc(description: "Specifies which page of results to return. The default value is 1.")
+    ): GiftWrapListOutput @resolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\GetList\\GiftWrap") @doc(description: "Searches for items that match the criteria specified in the search and filter attributes.")
+    mpGiftHistory (
+        id: Int! @doc(description: "Specifies the gift history id to search for."),
+    ): GiftHistoryOutput @resolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\Get\\GiftHistory") @doc(description: "Searches for an item that matches the id.")
+    mpGiftHistoryList (
+        filter: GiftHistoryFilterInput! @doc(description: "Identifies which fields to search for and return."),
+        pageSize: Int = 20 @doc(description: "Specifies the maximum number of results to return at once. The default value is 20."),
+        currentPage: Int = 1 @doc(description: "Specifies which page of results to return. The default value is 1.")
+    ): GiftHistoryListOutput @resolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\GetList\\GiftHistory") @doc(description: "Searches for items that match the criteria specified in the search and filter attributes.")
+}
+
+type Mutation {
+    mpGiftCategorySave (
+        accessToken: String! @doc(description: "Oauth access token that is needed to make requests."),
+        input: GiftCategoryInput! @doc(description: "Specifies which fields to change. If 'category_id' is presented, the category will be updated, otherwise create new category.")
+    ): GiftCategoryOutput @resolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\Save\\GiftCategory") @doc(description: "Save category")
+    mpGiftWrapSave (
+        accessToken: String! @doc(description: "Oauth access token that is needed to make requests."),
+        input: GiftWrapInput! @doc(description: "Specifies which fields to change. If 'wrap_id' is presented, the gift wrap will be updated, otherwise create new gift wrap.")
+    ): GiftWrapOutput @resolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\Save\\GiftWrap") @doc(description: "Save gift wrap")
+    mpGiftCategoryDelete (
+        accessToken: String! @doc(description: "Oauth access token that is needed to make requests."),
+        id: Int! @doc(description: "Specifies the category id to search for and delete.")
+    ): Boolean @resolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\Delete\\GiftCategory") @doc(description: "Delete category")
+    mpGiftWrapDelete (
+        accessToken: String! @doc(description: "Oauth access token that is needed to make requests."),
+        id: Int! @doc(description: "Specifies the gift wrap id to search for and delete.")
+    ): Boolean @resolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\Delete\\GiftWrap") @doc(description: "Delete gift wrap")
+    mpGiftWrapSet (
+        accessToken: String! @doc(description: "Oauth access token that is needed to make requests."),
+        cartId: Int! @doc(description: "Specifies the quote id to search for and apply the gift wrap."),
+        itemId: String! @doc(description: "Specifies the item id to search for and apply the gift wrap.")
+        wrapId: String! @doc(description: "Specifies what gift wrap will be applied.")
+        message: String! @doc(description: "Specifies what gift message will be applied.")
+    ): Boolean @resolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\Wrap\\SetWrap") @doc(description: "Apply gift wrap")
+    mpGiftWrapRemove (
+        accessToken: String! @doc(description: "Oauth access token that is needed to make requests."),
+        cartId: Int! @doc(description: "Specifies the quote id to search for and remove the gift wrap."),
+        itemId: String! @doc(description: "Specifies the item id to search for and remove the gift wrap.")
+    ): Boolean @resolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\Wrap\\RemoveWrap") @doc(description: "Remove gift wrap")
+}
+
+input GiftCategoryFilterInput @doc(description: "Defines the filters to be used in the search. A filter contains at least one attribute, a comparison operator, and the value that is being searched for.") {
+    category_id: FilterTypeInput
+    name: FilterTypeInput
+    status: FilterTypeInput
+    description: FilterTypeInput
+    store_id: FilterTypeInput
+    customer_group: FilterTypeInput
+    sort_order: FilterTypeInput
+    created_at: FilterTypeInput
+    updated_at: FilterTypeInput
+}
+
+input GiftWrapFilterInput @doc(description: "Defines the filters to be used in the search. A filter contains at least one attribute, a comparison operator, and the value that is being searched for.") {
+    wrap_id: FilterTypeInput
+    name: FilterTypeInput
+    status: FilterTypeInput
+    price_type: FilterTypeInput
+    amount: FilterTypeInput
+    description: FilterTypeInput
+    image: FilterTypeInput
+    category: FilterTypeInput
+    sort_order: FilterTypeInput
+    created_at: FilterTypeInput
+    updated_at: FilterTypeInput
+}
+
+input GiftHistoryFilterInput @doc(description: "Defines the filters to be used in the search. A filter contains at least one attribute, a comparison operator, and the value that is being searched for.") {
+    history_id: FilterTypeInput
+    order_id: FilterTypeInput
+    incr_id: FilterTypeInput
+    wrap_id: FilterTypeInput
+    wrap: FilterTypeInput
+    category: FilterTypeInput
+    image: FilterTypeInput
+    product_list: FilterTypeInput
+    message: FilterTypeInput
+    order_date: FilterTypeInput
+}
+
+input GiftCategoryInput {
+    category_id: Int @doc(description: "Gift card ID that is used to identify the gift card.")
+    name: String @doc(description: ".")
+    status: Int @doc(description: ".")
+    description: String @doc(description: ".")
+    store_id: String @doc(description: "Specifies which store the category is available at.")
+    customer_group: String @doc(description: ".")
+    sort_order: Float @doc(description: ".")
+}
+
+input GiftWrapInput {
+    wrap_id: Int @doc(description: "Gift wrap ID that is used to identify the gift wrap.")
+    name: String @doc(description: "Gift wrap name.")
+    status: Int @doc(description: "Gift wrap status.")
+    price_type: Int @doc(description: ".")
+    amount: Float @doc(description: ".")
+    description: String @doc(description: ".")
+    image: String @doc(description: "Relative image path.")
+    category: String @doc(description: ".")
+    sort_order: Float @doc(description: ".")
+}
+
+type GiftCategoryListOutput {
+    total_count: Int @doc(description: "The number of items returned.")
+    items: [GiftCategoryOutput] @doc(description: "An array of items that match the specified search criteria.")
+    page_info: PageInfo @doc(description: "An object that includes the pageSize and currentPage values specified in the query.")
+}
+
+type GiftWrapListOutput {
+    total_count: Int @doc(description: "The number of items returned.")
+    items: [GiftWrapOutput] @doc(description: "An array of items that match the specified search criteria.")
+    page_info: PageInfo @doc(description: "An object that includes the pageSize and currentPage values specified in the query.")
+}
+
+type GiftHistoryListOutput {
+    total_count: Int @doc(description: "The number of items returned.")
+    items: [GiftHistoryOutput] @doc(description: "An array of items that match the specified search criteria.")
+    page_info: PageInfo @doc(description: "An object that includes the pageSize and currentPage values specified in the query.")
+}
+
+type GiftCategoryOutput {
+    category_id: Int @doc(description: "Gift card ID that is used to identify the gift card.")
+    name: String @doc(description: ".")
+    status: Int @doc(description: ".")
+    description: String @doc(description: ".")
+    store_id: String @doc(description: "Specifies which store the category is available at.")
+    customer_group: String @doc(description: ".")
+    sort_order: Float @doc(description: ".")
+    created_at: String @doc(description: "Timestamp indicating when the entity was created.")
+    updated_at: String @doc(description: "Timestamp indicating when the entity was updated.")
+}
+
+type GiftWrapOutput {
+    wrap_id: Int @doc(description: "Gift wrap ID that is used to identify the gift wrap.")
+    name: String @doc(description: "Gift wrap name.")
+    status: Int @doc(description: "Gift wrap status.")
+    price_type: Int @doc(description: ".")
+    amount: Float @doc(description: ".")
+    description: String @doc(description: ".")
+    image: String @doc(description: "Relative image path.")
+    category: String @doc(description: ".")
+    sort_order: Float @doc(description: ".")
+    created_at: String @doc(description: "Timestamp indicating when the entity was created.")
+    updated_at: String @doc(description: "Timestamp indicating when the entity was updated.")
+}
+
+type GiftHistoryOutput {
+    history_id: Int @doc(description: "Gift history ID that is used to identify the gift history.")
+    order_id: Int @doc(description: ".")
+    incr_id: Int @doc(description: "Order increment ID.")
+    wrap_id: Int @doc(description: "Gift wrap ID.")
+    wrap: String @doc(description: "Gift wrap name.")
+    category: String @doc(description: "Gift category name.")
+    image: String @doc(description: "Gift wrap image.")
+    product_list: String @doc(description: "Array contains products belonged to the order.")
+    message: String @doc(description: ".")
+    order_date: String @doc(description: "Timestamp indicating when the order was created.")
+}
+
+type PageInfo {
+    pageSize: Int @doc(description: "How many items should show on the page.")
+    currentPage: Int @doc(description: "Specifies which page of results to return.")
+    hasNextPage: Boolean @doc(description: "Has next page.")
+    hasPreviousPage: Boolean @doc(description: "Has previous page.")
+    startPage: Int @doc(description: "Start page.")
+    endPage: Int @doc(description: "End page.")
+}
