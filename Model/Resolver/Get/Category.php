@@ -21,21 +21,16 @@
 
 declare(strict_types=1);
 
-namespace Mageplaza\GiftWrapGraphQl\Model\Resolver\Save;
+namespace Mageplaza\GiftWrapGraphQl\Model\Resolver\Get;
 
 /**
- * Class GiftCategory
- * @package Mageplaza\GiftWrapGraphQl\Model\Resolver\Save
+ * Class Category
+ * @package Mageplaza\GiftWrapGraphQl\Model\Resolver\Get
  */
-class GiftCategory extends AbstractResolver
+class Category extends AbstractResolver
 {
     /**
      * @var string
      */
-    protected $_aclResource = 'Mageplaza_GiftWrap::category';
-
-    /**
-     * @var string
-     */
-    protected $_type = 'mpGiftCategory';
+    protected $_type = 'mpGiftWrapCategory';
 }

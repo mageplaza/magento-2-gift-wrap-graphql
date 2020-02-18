@@ -23,21 +23,16 @@ declare(strict_types=1);
 
 namespace Mageplaza\GiftWrapGraphQl\Model\Resolver\Filter\Query;
 
-use Exception;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\GraphQl\Query\Resolver\Argument\SearchCriteria\Builder;
 use Mageplaza\GiftWrap\Api\CategoryManagementInterface;
 use Mageplaza\GiftWrap\Api\Data\CategoryInterface;
 use Mageplaza\GiftWrap\Api\Data\HistoryInterface;
 use Mageplaza\GiftWrap\Api\Data\WrapInterface;
-use Mageplaza\GiftWrap\Api\HistoryManagementInterface;
 use Mageplaza\GiftWrap\Api\WrapManagementInterface;
-use Mageplaza\GiftWrap\Helper\Data;
 use Mageplaza\GiftWrap\Model\Category as CategoryModel;
-use Mageplaza\GiftWrap\Model\CategoryFactory;
 use Mageplaza\GiftWrap\Model\History as HistoryModel;
 use Mageplaza\GiftWrap\Model\Wrap as WrapModel;
-use Mageplaza\GiftWrap\Model\WrapFactory;
 use Mageplaza\GiftWrapGraphQl\Model\Resolver\Filter\SearchResult;
 use Mageplaza\GiftWrapGraphQl\Model\Resolver\Filter\SearchResultFactory;
 
@@ -67,47 +62,23 @@ class Filter
     private $wrapManagement;
 
     /**
-     * @var HistoryManagementInterface
-     */
-    private $historyManagement;
-
-    /**
-     * @var CategoryFactory
-     */
-    private $categoryFactory;
-
-    /**
-     * @var WrapFactory
-     */
-    private $wrapFactory;
-
-    /**
      * Filter constructor.
      *
      * @param Builder $searchCriteriaBuilder
      * @param SearchResultFactory $searchResultFactory
      * @param CategoryManagementInterface $categoryManagement
      * @param WrapManagementInterface $wrapManagement
-     * @param HistoryManagementInterface $historyManagement
-     * @param CategoryFactory $categoryFactory
-     * @param WrapFactory $wrapFactory
      */
     public function __construct(
         Builder $searchCriteriaBuilder,
         SearchResultFactory $searchResultFactory,
         CategoryManagementInterface $categoryManagement,
-        WrapManagementInterface $wrapManagement,
-        HistoryManagementInterface $historyManagement,
-        CategoryFactory $categoryFactory,
-        WrapFactory $wrapFactory
+        WrapManagementInterface $wrapManagement
     ) {
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         $this->searchResultFactory   = $searchResultFactory;
         $this->categoryManagement    = $categoryManagement;
         $this->wrapManagement        = $wrapManagement;
-        $this->historyManagement     = $historyManagement;
-        $this->categoryFactory       = $categoryFactory;
-        $this->wrapFactory           = $wrapFactory;
     }
 
     /**
@@ -123,15 +94,12 @@ class Filter
         $searchCriteria->setPageSize($args['pageSize']);
 
         switch ($type) {
-            case 'mpGiftCategory':
+            case 'mpGiftWrapCategory':
                 $list = $this->categoryManagement->getList($searchCriteria);
                 break;
-            case 'mpGiftWrap':
-                $list = $this->wrapManagement->getList($searchCriteria);
-                break;
-            case 'mpGiftHistory':
+            case 'mpGiftWrapWrapper':
             default:
-                $list = $this->historyManagement->getList($searchCriteria);
+                $list = $this->wrapManagement->getList($searchCriteria);
                 break;
         }
 
@@ -155,57 +123,11 @@ class Filter
     public function getResultById($id, $type)
     {
         switch ($type) {
-            case 'mpGiftCategory':
+            case 'mpGiftWrapCategory':
                 return $this->categoryManagement->get($id);
-            case 'mpGiftWrap':
+            case 'mpGiftWrapWrapper':
+            default:
                 return $this->wrapManagement->get($id);
-            case 'mpGiftHistory':
-            default:
-                return $this->historyManagement->get($id);
-        }
-    }
-
-    /**
-     * @param array $data
-     * @param string $type
-     *
-     * @return CategoryInterface|WrapInterface|HistoryInterface
-     * @throws Exception
-     */
-    public function saveEntity($data, $type)
-    {
-        if (isset($data['template_fields'])) {
-            $data['template_fields'] = Data::jsonEncode($data['template_fields']);
-        }
-
-        switch ($type) {
-            case 'mpGiftCategory':
-                $entity = $this->categoryFactory->create()->setData($data);
-
-                return $this->categoryManagement->save($entity);
-            case 'mpGiftWrap':
-            default:
-                $entity = $this->wrapFactory->create()->setData($data);
-
-                return $this->wrapManagement->save($entity);
-        }
-    }
-
-    /**
-     * @param string $id
-     * @param string $type
-     *
-     * @return bool
-     * @throws NoSuchEntityException
-     */
-    public function deleteEntity($id, $type)
-    {
-        switch ($type) {
-            case 'mpGiftCategory':
-                return $this->categoryManagement->delete($id);
-            default:
-            case 'mpGiftWrap':
-                return $this->wrapManagement->delete($id);
         }
     }
 }

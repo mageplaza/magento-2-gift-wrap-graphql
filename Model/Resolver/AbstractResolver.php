@@ -28,7 +28,6 @@ use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Mageplaza\GiftWrap\Helper\Data;
-use Mageplaza\GiftWrapGraphQl\Helper\Auth;
 use Mageplaza\GiftWrapGraphQl\Model\Resolver\Filter\Query\Filter;
 
 /**
@@ -37,11 +36,6 @@ use Mageplaza\GiftWrapGraphQl\Model\Resolver\Filter\Query\Filter;
  */
 abstract class AbstractResolver implements ResolverInterface
 {
-    /**
-     * @var string
-     */
-    protected $_aclResource = '';
-
     /**
      * @var string
      */
@@ -58,25 +52,17 @@ abstract class AbstractResolver implements ResolverInterface
     private $helper;
 
     /**
-     * @var Auth
-     */
-    protected $auth;
-
-    /**
      * AbstractResolver constructor.
      *
      * @param Filter $filter
      * @param Data $helper
-     * @param Auth $auth
      */
     public function __construct(
         Filter $filter,
-        Data $helper,
-        Auth $auth
+        Data $helper
     ) {
         $this->filter = $filter;
         $this->helper = $helper;
-        $this->auth   = $auth;
     }
 
     /**

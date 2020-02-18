@@ -24,10 +24,15 @@
     <type name="Magento\Framework\GraphQl\Query\Resolver\Argument\FieldEntityAttributesPool">
         <arguments>
             <argument name="attributesInstances" xsi:type="array">
-                <item name="mpGiftCategory" xsi:type="object">Mageplaza\GiftWrapGraphQl\Model\Resolver\FilterArgument</item>
-                <item name="mpGiftWrap" xsi:type="object">Mageplaza\GiftWrapGraphQl\Model\Resolver\FilterArgument</item>
-                <item name="mpGiftHistory" xsi:type="object">Mageplaza\GiftWrapGraphQl\Model\Resolver\FilterArgument</item>
+                <item name="mpGiftWrapCategory" xsi:type="object">Mageplaza\GiftWrapGraphQl\Model\Resolver\FilterArgument</item>
+                <item name="mpGiftWrapWrapper" xsi:type="object">Mageplaza\GiftWrapGraphQl\Model\Resolver\FilterArgument</item>
             </argument>
         </arguments>
+    </type>
+    <type name="Magento\QuoteGraphQl\Model\Cart\AddSimpleProductToCart">
+        <plugin name="mpgiftwrap_add_wrapper_to_simple_product" type="Mageplaza\GiftWrapGraphQl\Plugin\Model\Cart\AddSimpleProductToCart"/>
+    </type>
+    <type name="Magento\QuoteGraphQl\Model\Resolver\AddSimpleProductsToCart">
+        <plugin name="mpgiftwrap_save_wrapper_data_simple_product" type="Mageplaza\GiftWrapGraphQl\Plugin\Model\Resolver\AddSimpleProductsToCart"/>
     </type>
 </config>

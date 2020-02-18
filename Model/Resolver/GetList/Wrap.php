@@ -21,13 +21,16 @@
 
 declare(strict_types=1);
 
-namespace Mageplaza\GiftWrapGraphQl\Model\Resolver\Get;
+namespace Mageplaza\GiftWrapGraphQl\Model\Resolver\GetList;
 
 /**
- * Class GiftHistory
- * @package Mageplaza\GiftWrapGraphQl\Model\Resolver\Get
+ * Class Wrap
+ * @package Mageplaza\GiftWrapGraphQl\Model\Resolver\GetList
  */
-class GiftHistory extends AbstractResolver
+class Wrap extends AbstractResolver
 {
-    protected $_type = 'mpGiftHistory';
+    /**
+     * @var string
+     */
+    protected $_type = 'mpGiftWrapWrapper';
 }

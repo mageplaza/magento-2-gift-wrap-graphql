@@ -21,21 +21,16 @@
 
 declare(strict_types=1);
 
-namespace Mageplaza\GiftWrapGraphQl\Model\Resolver\Delete;
+namespace Mageplaza\GiftWrapGraphQl\Model\Resolver\GetList;
 
 /**
- * Class GiftHistory
- * @package Mageplaza\GiftWrapGraphQl\Model\Resolver\Delete
+ * Class Category
+ * @package Mageplaza\GiftWrapGraphQl\Model\Resolver\GetList
  */
-class GiftHistory extends AbstractResolver
+class Category extends AbstractResolver
 {
     /**
      * @var string
      */
-    protected $_aclResource = 'Mageplaza_GiftWrap::history';
-
-    /**
-     * @var string
-     */
-    protected $_type = 'mpGiftHistory';
+    protected $_type = 'mpGiftWrapCategory';
 }

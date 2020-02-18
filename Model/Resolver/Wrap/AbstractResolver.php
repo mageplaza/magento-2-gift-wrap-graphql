@@ -29,7 +29,6 @@ use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Mageplaza\GiftWrap\Api\QuoteWrapInterface;
 use Mageplaza\GiftWrap\Helper\Data;
-use Mageplaza\GiftWrapGraphQl\Helper\Auth;
 
 /**
  * Class AbstractResolver
@@ -37,11 +36,6 @@ use Mageplaza\GiftWrapGraphQl\Helper\Auth;
  */
 abstract class AbstractResolver implements ResolverInterface
 {
-    /**
-     * @var string
-     */
-    protected $_aclResource = 'Mageplaza_GiftWrap::wrap';
-
     /**
      * @var QuoteWrapInterface
      */
@@ -53,25 +47,17 @@ abstract class AbstractResolver implements ResolverInterface
     private $helper;
 
     /**
-     * @var Auth
-     */
-    private $auth;
-
-    /**
      * AbstractResolver constructor.
      *
      * @param QuoteWrapInterface $quoteWrap
      * @param Data $helper
-     * @param Auth $auth
      */
     public function __construct(
         QuoteWrapInterface $quoteWrap,
-        Data $helper,
-        Auth $auth
+        Data $helper
     ) {
         $this->quoteWrap = $quoteWrap;
         $this->helper    = $helper;
-        $this->auth      = $auth;
     }
 
     /**
@@ -81,10 +67,6 @@ abstract class AbstractResolver implements ResolverInterface
     {
         if (!$this->helper->isEnabled()) {
             throw new GraphQlInputException(__('The module is disabled'));
-        }
-
-        if (!$this->auth->isAllowed($args['accessToken'], $this->_aclResource)) {
-            throw new GraphQlInputException(__("The consumer isn't authorized to access %1", $this->_aclResource));
         }
 
         return $this->handleArgs($args);
