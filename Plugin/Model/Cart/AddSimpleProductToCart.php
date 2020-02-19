@@ -102,7 +102,13 @@ class AddSimpleProductToCart
      */
     private function getWrap($cartItemData)
     {
-        $wrap = $this->wrapFactory->create()->load($cartItemData['data']['mp_gift_wrap_wrap_id'])->getData();
+        $wrapObj = $this->wrapFactory->create()->load($cartItemData['data']['mp_gift_wrap_wrap_id']);
+
+        if (!$wrapObj->getId()) {
+            throw NoSuchEntityException::singleField('wrapId', $cartItemData['data']['mp_gift_wrap_wrap_id']);
+        }
+
+        $wrap = $wrapObj->getData();
 
         $this->helper->processWrap($wrap);
 

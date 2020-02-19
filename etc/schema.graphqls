@@ -112,26 +112,25 @@ interface GiftWrapWrapperInterface @typeResolver(class: "Mageplaza\\GiftWrapGrap
     updated_at: String @doc(description: "Timestamp indicating when the entity was updated.")
 }
 
-type GiftWrapWrapperOutput implements GiftWrapWrapperInterface {
-}
+type GiftWrapWrapperOutput implements GiftWrapWrapperInterface
 
 type GiftWrapDetailsOutput implements GiftWrapWrapperInterface {
-    price: String @doc(description: ".")
-    use_gift_message: Boolean @doc(description: ".")
-    gift_message: String @doc(description: ".")
-    gift_message_fee: Float @doc(description: ".")
-    all_cart: Boolean @doc(description: ".")
+    price: String @doc(description: "Price of the gift wrap in formatted currency.")
+    use_gift_message: Boolean @doc(description: "Is gift message added into the wrapper?")
+    gift_message: String @doc(description: "Gift message content.")
+    gift_message_fee: Float @doc(description: "Gift message fee.")
+    all_cart: Boolean @doc(description: "Is the wrapper applied for the whole cart?")
 }
 
 type GiftWrapItemOutput {
-    item_id: Int @doc(description: ".")
-    sku: String @doc(description: ".")
-    qty: Float @doc(description: ".")
-    name: String @doc(description: ".")
-    price: Float @doc(description: ".")
-    product_type: String @doc(description: ".")
-    quote_id: String @doc(description: ".")
-    mp_gift_wrap_data: GiftWrapDetailsOutput @doc(description: ".")
+    item_id: Int @doc(description: "Item ID.")
+    sku: String @doc(description: "Product SKU.")
+    qty: Float @doc(description: "Product quantity in cart.")
+    name: String @doc(description: "Product name.")
+    price: Float @doc(description: "Product price.")
+    product_type: String @doc(description: "Product type.")
+    quote_id: String @doc(description: "Quote ID.")
+    mp_gift_wrap_data: GiftWrapDetailsOutput @doc(description: "Gift wrap information of the item.")
 }
 
 type PageInfo {

@@ -55,14 +55,14 @@ class FilterArgument implements FieldEntityAttributesInterface
     {
         $fields = [];
 
-        $elements = ['GiftWrapCategoryOutput', 'GiftWrapWrapperOutput'];
+        $elements = ['GiftWrapCategoryOutput', 'GiftWrapWrapperOutput', 'FilterTypeInput'];
         foreach ($elements as $element) {
             /** @var Field $field */
             foreach ($this->config->getConfigElement($element)->getFields() as $field) {
-                $fields[$field->getName()] = '';
+                $fields[$field->getName()] = $field->getName();
             }
         }
 
-        return array_keys($fields);
+        return $fields;
     }
 }

@@ -24,10 +24,10 @@ namespace Mageplaza\GiftWrapGraphQl\Plugin\Model\Resolver;
 use Mageplaza\GiftWrapGraphQl\Helper\Item;
 
 /**
- * Class AddSimpleProductsToCart
+ * Class AddConfigurableProductsToCart
  * @package Mageplaza\GiftWrapGraphQl\Plugin\Model\Resolver
  */
-class AddSimpleProductsToCart
+class AddConfigurableProductsToCart
 {
     /**
      * @var Item
@@ -35,7 +35,7 @@ class AddSimpleProductsToCart
     private $helper;
 
     /**
-     * AddSimpleProductsToCart constructor.
+     * AddConfigurableProductsToCart constructor.
      *
      * @param Item $helper
      */
@@ -45,18 +45,18 @@ class AddSimpleProductsToCart
     }
 
     /**
-     * @param \Magento\QuoteGraphQl\Model\Resolver\AddSimpleProductsToCart $subject
+     * @param \Magento\ConfigurableProductGraphQl\Model\Resolver\AddConfigurableProductsToCart $subject
      * @param array $result
      *
      * @return array
      */
     public function afterResolve(
-        \Magento\QuoteGraphQl\Model\Resolver\AddSimpleProductsToCart $subject,
+        \Magento\ConfigurableProductGraphQl\Model\Resolver\AddConfigurableProductsToCart $subject,
         array $result
     ) {
         $cart = $result['cart']['model'] ?? null;
 
-        $this->helper->resolveGiftWrap($cart);
+//        $this->helper->resolveGiftWrap($cart);
 
         return [$result];
     }
