@@ -23,11 +23,12 @@ declare(strict_types=1);
 
 namespace Mageplaza\GiftWrapGraphQl\Model\Resolver\Get;
 
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Mageplaza\GiftWrap\Api\Data\CategoryInterface;
-use Mageplaza\GiftWrap\Api\Data\WrapInterface;
 use Mageplaza\GiftWrap\Api\Data\HistoryInterface;
+use Mageplaza\GiftWrap\Api\Data\WrapInterface;
 
 /**
  * Class AbstractResolver
@@ -46,6 +47,8 @@ class AbstractResolver extends \Mageplaza\GiftWrapGraphQl\Model\Resolver\Abstrac
         try {
             return $this->filter->getResultById($args['id'], $this->_type);
         } catch (NoSuchEntityException $e) {
+            throw new GraphQlInputException(__($e->getMessage()));
+        } catch (LocalizedException $e) {
             throw new GraphQlInputException(__($e->getMessage()));
         }
     }

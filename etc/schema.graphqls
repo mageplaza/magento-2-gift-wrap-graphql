@@ -37,15 +37,15 @@ type Query {
 
 type Mutation {
     mpGiftWrapWrapperSet (
-        cartId: Int! @doc(description: "Specifies the quote id to search for and apply the gift wrap."),
-        itemId: String! @doc(description: "Specifies the item id to search for and apply the gift wrap.")
-        wrapId: String! @doc(description: "Specifies what gift wrap will be applied.")
-        message: String! @doc(description: "Specifies what gift message will be applied.")
-    ): Boolean @resolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\Wrap\\SetWrap") @doc(description: "Set gift wrap for a specified item in the cart")
+        cart_id: String! @doc(description: "Specifies the quote mask id to search for and apply the gift wrap."),
+        item_id: Int! @doc(description: "Specifies the item id to search for and apply the gift wrap.")
+        wrap_id: Int! @doc(description: "Specifies what gift wrap will be applied.")
+        message: String @doc(description: "Specifies what gift message will be applied.")
+    ): GiftWrapItemOutput @resolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\Wrap\\SetWrap") @doc(description: "Set gift wrap for a specified item in the cart")
     mpGiftWrapWrapperRemove (
-        cartId: Int! @doc(description: "Specifies the quote id to search for and remove the gift wrap."),
-        itemId: String! @doc(description: "Specifies the item id to search for and remove the gift wrap.")
-    ): Boolean @resolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\Wrap\\RemoveWrap") @doc(description: "Remove gift wrap from a specified item in the cart")
+        cart_id: String! @doc(description: "Specifies the quote mask id to search for and remove the gift wrap."),
+        item_id: Int! @doc(description: "Specifies the item id to search for and remove the gift wrap.")
+    ): GiftWrapItemOutput @resolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\Wrap\\RemoveWrap") @doc(description: "Remove gift wrap from a specified item in the cart")
 }
 
 input GiftWrapCategoryFilterInput @doc(description: "Defines the filters to be used in the search. A filter contains at least one attribute, a comparison operator, and the value that is being searched for.") {
@@ -98,7 +98,7 @@ type GiftWrapCategoryOutput {
     updated_at: String @doc(description: "Timestamp indicating when the entity was updated.")
 }
 
-type GiftWrapWrapperOutput {
+interface GiftWrapWrapperInterface @typeResolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\WrapperInterfaceTypeResolver") {
     wrap_id: Int @doc(description: "Gift wrap ID that is used to identify the gift wrap.")
     name: String @doc(description: "Wrapper name.")
     status: Int @doc(description: "Status of the wrapper.")
@@ -110,6 +110,28 @@ type GiftWrapWrapperOutput {
     sort_order: Float @doc(description: "The order in which the option is displayed.")
     created_at: String @doc(description: "Timestamp indicating when the entity was created.")
     updated_at: String @doc(description: "Timestamp indicating when the entity was updated.")
+}
+
+type GiftWrapWrapperOutput implements GiftWrapWrapperInterface {
+}
+
+type GiftWrapDetailsOutput implements GiftWrapWrapperInterface {
+    price: String @doc(description: ".")
+    use_gift_message: Boolean @doc(description: ".")
+    gift_message: String @doc(description: ".")
+    gift_message_fee: Float @doc(description: ".")
+    all_cart: Boolean @doc(description: ".")
+}
+
+type GiftWrapItemOutput {
+    item_id: Int @doc(description: ".")
+    sku: String @doc(description: ".")
+    qty: Float @doc(description: ".")
+    name: String @doc(description: ".")
+    price: Float @doc(description: ".")
+    product_type: String @doc(description: ".")
+    quote_id: String @doc(description: ".")
+    mp_gift_wrap_data: GiftWrapDetailsOutput @doc(description: ".")
 }
 
 type PageInfo {

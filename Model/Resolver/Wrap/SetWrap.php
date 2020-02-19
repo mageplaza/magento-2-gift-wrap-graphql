@@ -43,7 +43,7 @@ class SetWrap extends AbstractResolver
     protected function handleArgs(array $args)
     {
         try {
-            return $this->quoteWrap->set($args['cartId'], $args['itemId'], $args['wrapId'], $args['message']);
+            return $this->quoteWrap->set($args['cart_id'], $args['item_id'], $args['wrap_id'], $args['message'] ?? '');
         } catch (NoSuchEntityException $e) {
             throw new GraphQlInputException(__($e->getMessage()));
         } catch (LocalizedException $e) {

@@ -43,7 +43,7 @@ class RemoveWrap extends AbstractResolver
     protected function handleArgs(array $args)
     {
         try {
-            return $this->quoteWrap->remove($args['cartId'], $args['itemId']);
+            return $this->quoteWrap->remove($args['cart_id'], $args['item_id']);
         } catch (NoSuchEntityException $e) {
             throw new GraphQlInputException(__($e->getMessage()));
         } catch (LocalizedException $e) {

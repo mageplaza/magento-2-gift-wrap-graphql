@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace Mageplaza\GiftWrapGraphQl\Model\Resolver\Filter\Query;
 
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\GraphQl\Query\Resolver\Argument\SearchCriteria\Builder;
 use Mageplaza\GiftWrap\Api\CategoryManagementInterface;
@@ -86,8 +87,9 @@ class Filter
      * @param string $type
      *
      * @return SearchResult
+     * @throws LocalizedException
      */
-    public function getResult($args, $type): SearchResult
+    public function getResult($args, $type)
     {
         $searchCriteria = $this->searchCriteriaBuilder->build($type, $args);
         $searchCriteria->setCurrentPage($args['currentPage']);
@@ -119,6 +121,7 @@ class Filter
      *
      * @return CategoryInterface|WrapInterface|HistoryInterface
      * @throws NoSuchEntityException
+     * @throws LocalizedException
      */
     public function getResultById($id, $type)
     {

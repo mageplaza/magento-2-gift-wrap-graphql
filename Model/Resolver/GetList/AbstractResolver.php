@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace Mageplaza\GiftWrapGraphQl\Model\Resolver\GetList;
 
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Mageplaza\GiftWrapGraphQl\Model\Resolver\Filter\SearchResult;
 
@@ -48,7 +49,11 @@ class AbstractResolver extends \Mageplaza\GiftWrapGraphQl\Model\Resolver\Abstrac
             throw new GraphQlInputException(__('pageSize value must be greater than 0.'));
         }
 
-        $searchResult = $this->filter->getResult($args, $this->_type);
+        try {
+            $searchResult = $this->filter->getResult($args, $this->_type);
+        } catch (LocalizedException $e) {
+            throw new GraphQlInputException(__($e->getMessage()));
+        }
 
         return [
             'total_count' => $searchResult->getTotalCount(),
