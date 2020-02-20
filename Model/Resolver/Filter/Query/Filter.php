@@ -26,14 +26,11 @@ namespace Mageplaza\GiftWrapGraphQl\Model\Resolver\Filter\Query;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\GraphQl\Query\Resolver\Argument\SearchCriteria\Builder;
+use Magento\Framework\Model\AbstractModel;
 use Mageplaza\GiftWrap\Api\CategoryManagementInterface;
 use Mageplaza\GiftWrap\Api\Data\CategoryInterface;
-use Mageplaza\GiftWrap\Api\Data\HistoryInterface;
 use Mageplaza\GiftWrap\Api\Data\WrapInterface;
 use Mageplaza\GiftWrap\Api\WrapManagementInterface;
-use Mageplaza\GiftWrap\Model\Category as CategoryModel;
-use Mageplaza\GiftWrap\Model\History as HistoryModel;
-use Mageplaza\GiftWrap\Model\Wrap as WrapModel;
 use Mageplaza\GiftWrapGraphQl\Model\Resolver\Filter\SearchResult;
 use Mageplaza\GiftWrapGraphQl\Model\Resolver\Filter\SearchResultFactory;
 
@@ -106,10 +103,9 @@ class Filter
         }
 
         $listArray = [];
-        /** @var CategoryModel|WrapModel|HistoryModel $item */
+        /** @var AbstractModel $item */
         foreach ($list->getItems() as $item) {
-            $listArray[$item->getId()]          = $item->getData();
-            $listArray[$item->getId()]['model'] = $item;
+            $listArray[$item->getId()] = $item->getData();
         }
 
         return $this->searchResultFactory->create($list->getTotalCount(), $listArray);
@@ -119,7 +115,7 @@ class Filter
      * @param string $id
      * @param string $type
      *
-     * @return CategoryInterface|WrapInterface|HistoryInterface
+     * @return CategoryInterface|WrapInterface
      * @throws NoSuchEntityException
      * @throws LocalizedException
      */

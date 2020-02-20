@@ -54,9 +54,7 @@ class AddSimpleProductsToCart
         \Magento\QuoteGraphQl\Model\Resolver\AddSimpleProductsToCart $subject,
         array $result
     ) {
-        $cart = $result['cart']['model'] ?? null;
-
-        $this->helper->resolveGiftWrap($cart);
+        $this->helper->resolveGiftWrap($result['cart']['model'] ?? null);
 
         return $result;
     }

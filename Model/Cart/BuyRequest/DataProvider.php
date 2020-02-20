@@ -59,7 +59,11 @@ class DataProvider
     }
 
     /**
-     * @inheritdoc
+     * Provide buy request data from add to cart item request
+     *
+     * @param array $cartItemData
+     *
+     * @return array
      * @throws NoSuchEntityException
      */
     public function execute(array $cartItemData): array

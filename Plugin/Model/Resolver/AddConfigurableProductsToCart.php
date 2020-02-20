@@ -54,9 +54,7 @@ class AddConfigurableProductsToCart
         \Magento\ConfigurableProductGraphQl\Model\Resolver\AddConfigurableProductsToCart $subject,
         array $result
     ) {
-        $cart = $result['cart']['model'] ?? null;
-
-        $this->helper->resolveGiftWrap($cart);
+        $this->helper->resolveGiftWrap($result['cart']['model'] ?? null);
 
         return $result;
     }
