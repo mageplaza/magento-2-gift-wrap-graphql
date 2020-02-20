@@ -58,6 +58,6 @@ class AddSimpleProductsToCart
 
         $this->helper->resolveGiftWrap($cart);
 
-        return [$result];
+        return $result;
     }
 }

@@ -25,7 +25,8 @@ use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Quote\Model\Quote;
 use Mageplaza\GiftWrap\Helper\Data;
-use Mageplaza\GiftWrap\Model\WrapFactory;
+use Mageplaza\GiftWrapGraphQl\Helper\Item;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class AddSimpleProductToCart
@@ -34,14 +35,14 @@ use Mageplaza\GiftWrap\Model\WrapFactory;
 class AddSimpleProductToCart
 {
     /**
-     * @var Data
+     * @var Item
      */
     private $helper;
 
     /**
-     * @var WrapFactory
+     * @var LoggerInterface
      */
-    private $wrapFactory;
+    private $logger;
 
     /**
      * @var ProductRepositoryInterface
@@ -51,17 +52,17 @@ class AddSimpleProductToCart
     /**
      * AddSimpleProductToCart constructor.
      *
-     * @param Data $helper
-     * @param WrapFactory $wrapFactory
+     * @param Item $helper
+     * @param LoggerInterface $logger
      * @param ProductRepositoryInterface $productRepository
      */
     public function __construct(
-        Data $helper,
-        WrapFactory $wrapFactory,
+        Item $helper,
+        LoggerInterface $logger,
         ProductRepositoryInterface $productRepository
     ) {
         $this->helper            = $helper;
-        $this->wrapFactory       = $wrapFactory;
+        $this->logger            = $logger;
         $this->productRepository = $productRepository;
     }
 
@@ -81,42 +82,16 @@ class AddSimpleProductToCart
             return [$cart, $cartItemData];
         }
 
+        $cartItemData['data']['mp_gift_wrap_store_id'] = $cart->getStoreId();
+
         try {
             $product = $this->productRepository->get($cartItemData['data']['sku']);
 
-            $wrap = $this->getWrap($cartItemData);
+            $product->addCustomOption(Data::GIFT_WRAP_DATA, $this->helper->getWrapData($cartItemData), $product);
         } catch (NoSuchEntityException $e) {
-            return [$cart, $cartItemData];
+            $this->logger->critical($e);
         }
-
-        $product->addCustomOption(Data::GIFT_WRAP_DATA, Data::jsonEncode($wrap), $product);
 
         return [$cart, $cartItemData];
-    }
-
-    /**
-     * @param array $cartItemData
-     *
-     * @return array
-     * @throws NoSuchEntityException
-     */
-    private function getWrap($cartItemData)
-    {
-        $wrapObj = $this->wrapFactory->create()->load($cartItemData['data']['mp_gift_wrap_wrap_id']);
-
-        if (!$wrapObj->getId()) {
-            throw NoSuchEntityException::singleField('wrapId', $cartItemData['data']['mp_gift_wrap_wrap_id']);
-        }
-
-        $wrap = $wrapObj->getData();
-
-        $this->helper->processWrap($wrap);
-
-        $message = $cartItemData['data']['mp_gift_wrap_message'] ?? '';
-
-        $wrap['gift_message']     = $message;
-        $wrap['use_gift_message'] = $message !== '';
-
-        return $wrap;
     }
 }

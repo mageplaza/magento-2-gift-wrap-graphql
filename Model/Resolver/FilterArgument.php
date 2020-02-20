@@ -59,10 +59,10 @@ class FilterArgument implements FieldEntityAttributesInterface
         foreach ($elements as $element) {
             /** @var Field $field */
             foreach ($this->config->getConfigElement($element)->getFields() as $field) {
-                $fields[$field->getName()] = $field->getName();
+                $fields[] = $field->getName();
             }
         }
 
-        return $fields;
+        return array_combine($fields, $fields);
     }
 }

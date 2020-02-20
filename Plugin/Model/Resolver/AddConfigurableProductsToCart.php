@@ -56,8 +56,8 @@ class AddConfigurableProductsToCart
     ) {
         $cart = $result['cart']['model'] ?? null;
 
-//        $this->helper->resolveGiftWrap($cart);
+        $this->helper->resolveGiftWrap($cart);
 
-        return [$result];
+        return $result;
     }
 }

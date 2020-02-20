@@ -21,9 +21,11 @@
 
 namespace Mageplaza\GiftWrapGraphQl\Helper;
 
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Model\Quote;
 use Mageplaza\GiftWrap\Helper\Data;
+use Mageplaza\GiftWrap\Model\WrapFactory;
 
 /**
  * Class Item
@@ -32,17 +34,34 @@ use Mageplaza\GiftWrap\Helper\Data;
 class Item
 {
     /**
+     * @var Data
+     */
+    private $helper;
+
+    /**
+     * @var WrapFactory
+     */
+    private $wrapFactory;
+
+    /**
      * @var CartRepositoryInterface
      */
     private $cartRepository;
 
     /**
-     * Auth constructor.
+     * Item constructor.
      *
+     * @param Data $helper
+     * @param WrapFactory $wrapFactory
      * @param CartRepositoryInterface $cartRepository
      */
-    public function __construct(CartRepositoryInterface $cartRepository)
-    {
+    public function __construct(
+        Data $helper,
+        WrapFactory $wrapFactory,
+        CartRepositoryInterface $cartRepository
+    ) {
+        $this->helper         = $helper;
+        $this->wrapFactory    = $wrapFactory;
         $this->cartRepository = $cartRepository;
     }
 
@@ -85,5 +104,35 @@ class Item
         }
 
         $this->cartRepository->save($cart);
+    }
+
+    /**
+     * @param array $cartItemData
+     *
+     * @return string
+     * @throws NoSuchEntityException
+     */
+    public function getWrapData($cartItemData)
+    {
+        $wrapObj = $this->wrapFactory->create()->load($cartItemData['data']['mp_gift_wrap_wrap_id']);
+
+        if (!$wrapObj->getId()) {
+            throw NoSuchEntityException::singleField('wrapId', $cartItemData['data']['mp_gift_wrap_wrap_id']);
+        }
+
+        $wrap = $wrapObj->getData();
+
+        $this->helper->processWrap($wrap);
+
+        $message = $cartItemData['data']['mp_gift_wrap_message'] ?? '';
+        $storeId = $cartItemData['data']['mp_gift_wrap_store_id'] ?? 0;
+
+        $wrap['gift_message']     = $message;
+        $wrap['use_gift_message'] = $message !== '';
+        if ($wrap['use_gift_message']) {
+            $wrap['gift_message_fee'] = $this->helper->getGiftMessageFee(false, false, $storeId);
+        }
+
+        return Data::jsonEncode($wrap);
     }
 }
