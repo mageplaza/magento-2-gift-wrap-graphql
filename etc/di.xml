@@ -24,7 +24,8 @@
     <type name="Magento\Framework\GraphQl\Query\Resolver\Argument\FieldEntityAttributesPool">
         <arguments>
             <argument name="attributesInstances" xsi:type="array">
-                <item name="mpgiftwrap" xsi:type="object">Mageplaza\GiftWrapGraphQl\Model\Resolver\FilterArgument</item>
+                <item name="mpGiftWrapCategory" xsi:type="object">Mageplaza\GiftWrapGraphQl\Model\Resolver\FilterArgument</item>
+                <item name="mpGiftWrapWrapper" xsi:type="object">Mageplaza\GiftWrapGraphQl\Model\Resolver\FilterArgument</item>
             </argument>
         </arguments>
     </type>
