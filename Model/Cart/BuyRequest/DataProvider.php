@@ -25,7 +25,6 @@ namespace Mageplaza\GiftWrapGraphQl\Model\Cart\BuyRequest;
 
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\QuoteGraphQl\Model\Cart\BuyRequest\BuyRequestDataProviderInterface;
 use Mageplaza\GiftWrap\Helper\Data;
 use Mageplaza\GiftWrapGraphQl\Helper\Item;
 
@@ -33,7 +32,7 @@ use Mageplaza\GiftWrapGraphQl\Helper\Item;
  * Class DataProvider
  * @package Mageplaza\GiftWrapGraphQl\Model\Cart\BuyRequest
  */
-class DataProvider implements BuyRequestDataProviderInterface
+class DataProvider
 {
     /**
      * @var Item
