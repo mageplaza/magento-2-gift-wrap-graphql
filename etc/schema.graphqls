@@ -146,3 +146,7 @@ input CartItemInput {
     mp_gift_wrap_wrap_id: Int
     mp_gift_wrap_message: String
 }
+
+interface CartItemInterface {
+    mp_gift_wrap_data: GiftWrapDetailsOutput @doc(description: "Gift wrap information of the item.")
+}

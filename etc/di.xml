@@ -38,4 +38,7 @@
     <type name="Magento\ConfigurableProductGraphQl\Model\Resolver\AddConfigurableProductsToCart">
         <plugin name="mpgiftwrap_save_wrapper_data_simple_product" type="Mageplaza\GiftWrapGraphQl\Plugin\Model\Resolver\AddConfigurableProductsToCart"/>
     </type>
+    <type name="Magento\QuoteGraphQl\Model\Resolver\CartItems">
+        <plugin name="mpgiftwrap_add_wrapper_data_cart_item" type="Mageplaza\GiftWrapGraphQl\Plugin\Model\Resolver\CartItems"/>
+    </type>
 </config>
