@@ -21,7 +21,7 @@ type Query {
         id: Int! @doc(description: "Specifies the category id to search for."),
     ): GiftWrapCategoryOutput @resolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\Get\\Category") @doc(description: "Searches for an item that matches the id.")
     mpGiftWrapCategories (
-        filter: GiftWrapCategoryFilterInput! @doc(description: "Identifies which fields to search for and return."),
+        filter: GiftWrapCategoryFilterInput @doc(description: "Identifies which fields to search for and return."),
         pageSize: Int = 20 @doc(description: "Specifies the maximum number of results to return at once. The default value is 20."),
         currentPage: Int = 1 @doc(description: "Specifies which page of results to return. The default value is 1.")
     ): GiftWrapCategoriesOutput @resolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\GetList\\Category") @doc(description: "Searches for items that match the criteria specified in the search and filter attributes.")
@@ -29,7 +29,7 @@ type Query {
         id: Int! @doc(description: "Specifies the wrapper id to search for."),
     ): GiftWrapWrapperOutput @resolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\Get\\Wrap") @doc(description: "Searches for an item that matches the id.")
     mpGiftWrapWrappers (
-        filter: GiftWrapWrapperFilterInput! @doc(description: "Identifies which fields to search for and return."),
+        filter: GiftWrapWrapperFilterInput @doc(description: "Identifies which fields to search for and return."),
         pageSize: Int = 20 @doc(description: "Specifies the maximum number of results to return at once. The default value is 20."),
         currentPage: Int = 1 @doc(description: "Specifies which page of results to return. The default value is 1.")
     ): GiftWrapWrappersOutput @resolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\GetList\\Wrap") @doc(description: "Searches for items that match the criteria specified in the search and filter attributes.")

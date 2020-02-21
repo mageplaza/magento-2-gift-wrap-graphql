@@ -25,10 +25,12 @@ namespace Mageplaza\GiftWrapGraphQl\Model\Resolver\Wrap;
 
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\GraphQl\Config\Element\Field;
+use Magento\Framework\GraphQl\Exception\GraphQlAuthorizationException;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Exception\GraphQlNoSuchEntityException;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Model\MaskedQuoteIdToQuoteIdInterface;
 use Mageplaza\GiftWrap\Api\QuoteWrapInterface;
 use Mageplaza\GiftWrap\Helper\Data;
@@ -45,6 +47,11 @@ abstract class AbstractResolver implements ResolverInterface
     private $maskedQuoteIdToQuoteId;
 
     /**
+     * @var CartRepositoryInterface
+     */
+    private $cartRepository;
+
+    /**
      * @var QuoteWrapInterface
      */
     protected $quoteWrap;
@@ -58,15 +65,18 @@ abstract class AbstractResolver implements ResolverInterface
      * AbstractResolver constructor.
      *
      * @param MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId
+     * @param CartRepositoryInterface $cartRepository
      * @param QuoteWrapInterface $quoteWrap
      * @param Data $helper
      */
     public function __construct(
         MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId,
+        CartRepositoryInterface $cartRepository,
         QuoteWrapInterface $quoteWrap,
         Data $helper
     ) {
         $this->maskedQuoteIdToQuoteId = $maskedQuoteIdToQuoteId;
+        $this->cartRepository         = $cartRepository;
         $this->quoteWrap              = $quoteWrap;
         $this->helper                 = $helper;
     }
@@ -79,13 +89,48 @@ abstract class AbstractResolver implements ResolverInterface
         if (!$this->helper->isEnabled()) {
             throw new GraphQlInputException(__('The module is disabled'));
         }
-        try {
-            $cartId = $this->maskedQuoteIdToQuoteId->execute($args['cart_id']);
-        } catch (NoSuchEntityException $e) {
-            throw new GraphQlNoSuchEntityException(__('Could not find a cart with ID %1', $args['cart_id']));
-        }
+
+        $cartId = $this->getCartId($args['cart_id'], $context->getUserId());
 
         return $this->handleArgs($args, $cartId);
+    }
+
+    /**
+     * @param string|int $cartHash
+     * @param int $customerId
+     *
+     * @return int
+     * @throws GraphQlNoSuchEntityException
+     * @throws GraphQlAuthorizationException
+     */
+    private function getCartId($cartHash, $customerId)
+    {
+        try {
+            $cartId = is_numeric($cartHash) ? $cartHash : $this->maskedQuoteIdToQuoteId->execute($cartHash);
+        } catch (NoSuchEntityException $e) {
+            throw new GraphQlNoSuchEntityException(__('Could not find a cart with ID %1', $cartHash));
+        }
+
+        try {
+            $cart = $this->cartRepository->getActive($cartId);
+        } catch (NoSuchEntityException $e) {
+            throw new GraphQlNoSuchEntityException(__('Could not find an active cart with ID %1', $cartHash));
+        }
+
+        $cartCustomerId = (int) $cart->getCustomerId();
+
+        /* Guest cart, allow operations */
+        if (!$cartCustomerId && !$customerId) {
+            return $cartId;
+        }
+
+        if ($cartCustomerId !== $customerId) {
+            throw new GraphQlAuthorizationException(
+                __('The current user cannot perform operations on cart %1', $cartHash)
+            );
+        }
+
+        return $cartId;
     }
 
     /**

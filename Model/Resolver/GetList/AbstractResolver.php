@@ -23,9 +23,9 @@ declare(strict_types=1);
 
 namespace Mageplaza\GiftWrapGraphQl\Model\Resolver\GetList;
 
+use Magento\Framework\Api\SearchResultsInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
-use Mageplaza\GiftWrapGraphQl\Model\Resolver\Filter\SearchResult;
 
 /**
  * Class AbstractResolver
@@ -63,7 +63,7 @@ class AbstractResolver extends \Mageplaza\GiftWrapGraphQl\Model\Resolver\Abstrac
     }
 
     /**
-     * @param SearchResult $searchResult
+     * @param SearchResultsInterface $searchResult
      * @param array $args
      *
      * @return array
