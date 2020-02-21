@@ -102,13 +102,15 @@ class Filter
                 break;
         }
 
-        $listArray = [];
+        $totalCount = $list->getTotalCount();
+
+        $items = [];
         /** @var AbstractModel $item */
         foreach ($list->getItems() as $item) {
-            $listArray[$item->getId()] = $item->getData();
+            $items[$item->getId()] = $item->getData();
         }
 
-        return $this->searchResultFactory->create($list->getTotalCount(), $listArray);
+        return $this->searchResultFactory->create(compact('totalCount', 'items'));
     }
 
     /**

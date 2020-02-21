@@ -26,7 +26,7 @@ namespace Mageplaza\GiftWrapGraphQl\Model\Resolver\Wrap;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
-use Magento\Quote\Api\Data\TotalsInterface;
+use Mageplaza\GiftWrap\Api\Data\WrapItemInterface;
 
 /**
  * Class RemoveWrap
@@ -36,14 +36,15 @@ class RemoveWrap extends AbstractResolver
 {
     /**
      * @param array $args
+     * @param string $cartId
      *
-     * @return TotalsInterface
+     * @return WrapItemInterface
      * @throws GraphQlInputException
      */
-    protected function handleArgs(array $args)
+    protected function handleArgs(array $args, $cartId)
     {
         try {
-            return $this->quoteWrap->remove($args['cart_id'], $args['item_id']);
+            return $this->quoteWrap->remove($cartId, $args['item_id']);
         } catch (NoSuchEntityException $e) {
             throw new GraphQlInputException(__($e->getMessage()));
         } catch (LocalizedException $e) {

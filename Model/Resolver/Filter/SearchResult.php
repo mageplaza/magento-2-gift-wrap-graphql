@@ -38,16 +38,16 @@ class SearchResult
     /**
      * @var array
      */
-    private $itemsSearchResult;
+    private $items;
 
     /**
      * @param int $totalCount
-     * @param array $itemsSearchResult
+     * @param array $items
      */
-    public function __construct(int $totalCount, array $itemsSearchResult)
+    public function __construct(int $totalCount, array $items)
     {
-        $this->totalCount        = $totalCount;
-        $this->itemsSearchResult = $itemsSearchResult;
+        $this->totalCount = $totalCount;
+        $this->items      = $items;
     }
 
     /**
@@ -67,6 +67,6 @@ class SearchResult
      */
     public function getItems(): array
     {
-        return $this->itemsSearchResult;
+        return $this->items;
     }
 }
