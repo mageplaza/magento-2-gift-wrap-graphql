@@ -68,6 +68,10 @@ class DataProvider
      */
     public function execute(array $cartItemData): array
     {
+        if (!isset($cartItemData['data']['sku'], $cartItemData['data']['mp_gift_wrap_wrap_id'])) {
+            return [];
+        }
+
         $product = $this->productRepository->get($cartItemData['data']['sku']);
 
         $product->addCustomOption(Data::GIFT_WRAP_DATA, $this->helper->getWrapData($cartItemData), $product);
