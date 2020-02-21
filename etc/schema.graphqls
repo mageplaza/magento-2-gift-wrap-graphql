@@ -46,6 +46,14 @@ type Mutation {
         cart_id: String! @doc(description: "Specifies the quote mask id to search for and remove the gift wrap."),
         item_id: Int! @doc(description: "Specifies the item id to search for and remove the gift wrap.")
     ): GiftWrapItemOutput @resolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\Wrap\\RemoveWrap") @doc(description: "Remove gift wrap from a specified item in the cart")
+    mpGiftWrapWrapperSetAll (
+        cart_id: String! @doc(description: "Specifies the quote mask id to search for and apply the gift wrap."),
+        wrap_id: Int! @doc(description: "Specifies what gift wrap will be applied.")
+        message: String @doc(description: "Specifies what gift message will be applied.")
+    ): [GiftWrapItemOutput] @resolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\Wrap\\SetWrapAll") @doc(description: "Set gift wrap for a specified the cart")
+    mpGiftWrapWrapperRemoveAll (
+        cart_id: String! @doc(description: "Specifies the quote mask id to search for and remove the gift wrap."),
+    ): [GiftWrapItemOutput] @resolver(class: "Mageplaza\\GiftWrapGraphQl\\Model\\Resolver\\Wrap\\RemoveWrapAll") @doc(description: "Remove gift wrap from a specified cart")
 }
 
 input GiftWrapCategoryFilterInput @doc(description: "Defines the filters to be used in the search. A filter contains at least one attribute, a comparison operator, and the value that is being searched for.") {
