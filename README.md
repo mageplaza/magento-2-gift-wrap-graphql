@@ -1,4 +1,4 @@
-# Gift Wrap GraphQL
+# Magento 2 Gift Wrap GraphQL / PWA
 
 Mageplaza Gift Wrap Extension supports getting and pushing data on the website with GraphQl.
 
