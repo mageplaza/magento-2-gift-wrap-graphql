@@ -18,8 +18,8 @@ To start working with **Gift Wrap GraphQL** in Magento, you need to:
 
 - Use Magento 2.3.x. Return your site to developer mode
 - Install [chrome extension](https://chrome.google.com/webstore/detail/chromeiql/fkkiamalmpiidkljmicmjfbieiclmeij?hl=en) (currently does not support other browsers)
-- Set **GraphQL endpoint** as `http://<magento2-3-server>/graphql` in url box, click **Set endpoint**. (e.g. http://develop.mageplaza.com/graphql/ce232/graphql)
+- Set **GraphQL endpoint** as `http://<magento2-3-server>/graphql` in url box, click **Set endpoint**. (e.g. `http://develop.mageplaza.com/graphql/ce232/graphql`)
 - Perform a query in the left cell then click the **Run** button or **Ctrl + Enter** to see the result in the right cell
-- You can see more details [here](https://documenter.getpostman.com/view/5187684/SzKTuyMH?version=latest).
+- You can see more details => https://documenter.getpostman.com/view/5187684/SzKTuyMH?version=latest
 
 ![gift warp](https://i.imgur.com/PTVKYfp.jpg)
