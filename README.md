@@ -1,5 +1,7 @@
 # Magento 2 Gift Wrap GraphQL / PWA
 
+**Magento 2 Gift Wrap GraphQL is a part of Mageplaza Gift Wrap extension that adds GraphQL features. This supports PWA compatibility.** Mageplaza Gift Wrap Extension assists you in getting and pushing data on the website with GraphQL.
+
 [Mageplaza Gift Wrap for Magento 2](https://www.mageplaza.com/magento-2-gift-wrap/) enables gift wrapping like at the offline stores.
 
 The store admin can add the gift wrapping option on multiple pages so that customers can notice and choose to use it anytime while they are browsing across different pages on your website. The most common pages to display the “Add Your Gift wrap” suggestions are the Product Detail Page, Shopping Cart Page, and Checkout Page. 
@@ -13,8 +15,6 @@ The gift wrap papers can be organized into different categories. If your store h
 The extension also enables customers to add cards to their orders when they want to wrap items as a gift to send to someone. The card’s message is up to customers and will be written nicely on the card before sending it to the receivers. This customized feature enhances the customer experience and makes them feel like they’re actually involved in the gift wrapping process. 
 
 Offering a gift wrap option can generate extra revenue for your online store. You can set a fixed price for this service or flexibly calculate it based on the quantity of the items. However, this service should be an incentive for customers to purchase products, so the fee should be a small amount that customers are willing to pay. At the peak season, this gift wrap will be an appealing offering that differentiates your store from others. 
-
-What’s more, **Magento 2 Gift Wrap GraphQL is a part of Mageplaza Gift Wrap extension that adds GraphQL features. This supports PWA compatibility.** Mageplaza Gift Wrap Extension assists you in getting and pushing data on the website with GraphQl.
 
 ## 1. How to install
 
