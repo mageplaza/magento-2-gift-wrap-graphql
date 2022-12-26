@@ -128,8 +128,6 @@ type GiftWrapDetailsOutput implements GiftWrapWrapperInterface {
     all_cart: Boolean @doc(description: "Is the wrapper applied for the whole cart?")
 }
 
-type GiftWrapWrapperOutput implements GiftWrapWrapperInterface
-
 type GiftWrapItemOutput {
     item_id: Int @doc(description: "Item ID.")
     sku: String @doc(description: "Product SKU.")
@@ -140,6 +138,8 @@ type GiftWrapItemOutput {
     quote_id: String @doc(description: "Quote ID.")
     mp_gift_wrap_data: GiftWrapDetailsOutput @doc(description: "Gift wrap information of the item.")
 }
+
+type GiftWrapWrapperOutput implements GiftWrapWrapperInterface
 
 type PageInfo {
     pageSize: Int @doc(description: "How many items should show on the page.")
