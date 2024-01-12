@@ -120,7 +120,8 @@ interface GiftWrapWrapperInterface @typeResolver(class: "Mageplaza\\GiftWrapGrap
     updated_at: String @doc(description: "Timestamp indicating when the entity was updated.")
 }
 
-type GiftWrapWrapperOutput implements GiftWrapWrapperInterface
+type GiftWrapWrapperOutput implements GiftWrapWrapperInterface {
+}
 
 type GiftWrapDetailsOutput implements GiftWrapWrapperInterface {
     price: String @doc(description: "Price of the gift wrap in formatted currency.")
